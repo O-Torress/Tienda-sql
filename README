@@ -1,3 +1,16 @@
 Para este proyecto el motor de base de datos que utilize fue PostgreSQL.
 
 El nombre de la base de datos es tienda_db.
+
+## 5.2 Reflexión sobre Integridad Referencial
+
+### 1. El Experimento (Intento de eliminación)
+Para cumplir con el diseño del sistema, se intentó ejecutar una sentencia de eliminación directa sobre un producto que actualmente posee registros de compras asociados en la tabla `compras`:
+
+```sql
+DELETE FROM productos WHERE id = 1;
+
+
+Resultado en la terminal:
+PostgreSQL bloqueó la operación y arrojó el siguiente mensaje de error:
+ERROR: update or delete on table "productos" violates foreign key constraint... on table "compras"

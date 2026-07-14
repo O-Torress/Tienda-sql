@@ -173,8 +173,31 @@ UPDATE productos SET precio = precio * 1.15 WHERE categoria = 'Electronica' AND 
 SELECT nombre, categoria, precio FROM productos WHERE precio> 100 AND categoria = 'Electronica';
 
 --4.3 Depuración de clientes inactivos
+
 UPDATE usuarios SET activo = false WHERE id NOT IN ( SELECT DISTINCT usuario_id  FROM compras );
 
 -- SELECT para verificar qué usuarios quedaron inactivos
 SELECT id, nombre, apellido, email, activo FROM usuarios WHERE activo = false;
+
+*-------------------------------------------------------------------------
+
+-                            CONSULTA DE ELIMINACION
+
+-------------------------------------------------------------------------*/
+
+-- 5.1 Limpiar compras canceladas
+
+DELETE FROM compras WHERE estado = 'cancelada';
+
+-- 5.2 Retirar productos muertos del catálogo
+
+-- Paso 1: Eliminar primero las compras que dependen de ese producto
+DELETE FROM compras
+WHERE producto_id = 2;
+
+-- Paso 2: Ahora que no hay dependencias, borramos el producto de forma segura
+DELETE FROM productos WHERE id = 2;
+
+-- SELECT de verificación
+SELECT * FROM productos WHERE id = 2;
 
